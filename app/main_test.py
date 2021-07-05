@@ -17,6 +17,6 @@ def test_cli_can_set_password_length() -> None:
 
 
 def _run_cli(*args) -> Result:
-    result = runner.invoke(app, args)
+    result = runner.invoke(app, ["--no-random", *args])
     assert result.exit_code == 0
     return result

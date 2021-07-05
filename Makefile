@@ -8,7 +8,7 @@ lint:
 
 .PHONY: test
 test: 
-	pytest -v
+	pipenv run pytest -v --cov=. --cov-report=html
 
 .PHONY: cli
 cli: 
