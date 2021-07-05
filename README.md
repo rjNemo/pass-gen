@@ -4,7 +4,7 @@
 
 - [x] As a user I want to generate a random secure password to protect my personal accounts
     - [x] Minimal length
-    - [ ] Include symbols
+    - [x] Include symbols
     - [ ] Include numbers
     - [ ] Include lowercase characters
     - [ ] Include uppercase characters
