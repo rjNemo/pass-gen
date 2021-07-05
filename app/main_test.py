@@ -1,5 +1,6 @@
-from app.main import generate_password
 import pytest
+
+from app.main import generate_password
 
 
 @pytest.mark.parametrize(
@@ -11,4 +12,3 @@ import pytest
 )
 def test_can_generate_random_password(seed: int, expected: str) -> None:
     assert generate_password(seed) == expected
-  
