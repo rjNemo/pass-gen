@@ -30,6 +30,14 @@ def test_cli_can_set_numbers() -> None:
     assert "yWAcqGFz" in result.stdout
 
 
+def test_cli_can_save_to_file() -> None:
+    args = ["--file", "test.txt"]
+    _ = _run_cli(*args)
+    with open("test.txt", "r") as f:
+        content = f.read()
+        assert "2yW4AcqG" in content
+
+
 def _run_cli(*args) -> Result:
     result = runner.invoke(app, ["--no-random", *args])
     assert result.exit_code == 0

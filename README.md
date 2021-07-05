@@ -6,5 +6,5 @@
     - [x] Minimal length
     - [x] Include symbols
     - [x] Include numbers
-- [ ] As a user I want the generated password to be copied to the clipboard
+- [x] As a user I want the generated password to be copied to the clipboard
 - [x] As a user I want the generated password to be saved to a file
