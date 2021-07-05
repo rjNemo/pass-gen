@@ -23,10 +23,7 @@ def _new_random_generator(seed: int) -> RandomSampler:
 
 
 def _build_characters(symbols: bool, numbers: bool) -> str:
-    lowercase = string.ascii_lowercase
-    uppercase = string.ascii_uppercase
-
-    characters = lowercase + uppercase
+    characters = string.ascii_letters
 
     if symbols:
         characters += string.punctuation
