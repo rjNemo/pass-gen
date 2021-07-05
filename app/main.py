@@ -24,8 +24,10 @@ def main(
 
     subprocess.run("pbcopy", universal_newlines=True, input=password)
 
-    typer.echo(f"🔐 {password}")
-    typer.echo("The password has been copied to your clipboard 😉")
+    typer.echo(typer.style(f"🔐 {password}", fg=typer.colors.GREEN, bold=True))
+    typer.echo(
+        "The password has been copied to your clipboard 😉\nPaste it using cmd + v"
+    )
 
 
 if __name__ == "__main__":
