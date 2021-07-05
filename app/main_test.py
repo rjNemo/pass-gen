@@ -1,14 +1,10 @@
-import pytest
+from typer.testing import CliRunner
+from .main import app
 
-from app.main import generate_password
+runner = CliRunner()
 
 
-@pytest.mark.parametrize(
-    ("seed", "expected"),
-    [
-        (0, "2yW4AcqG"),
-        (1, "iK2ZWeqh"),
-    ],
-)
-def test_can_generate_random_password(seed: int, expected: str) -> None:
-    assert generate_password(seed) == expected
+def test_cli_print_password() -> None:
+    result = runner.invoke(app)
+    assert result.exit_code == 0
+    assert "2yW4AcqG" in result.stdout
