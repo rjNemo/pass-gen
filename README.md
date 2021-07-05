@@ -2,7 +2,7 @@
 
 ## Stories
 
-- [ ] As a user I want to generate a random secure password to protect my personal accounts
+- [x] As a user I want to generate a random secure password to protect my personal accounts
     - [ ] Minimal length
     - [ ] Include symbols
     - [ ] Include numbers
