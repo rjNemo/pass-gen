@@ -1,5 +1,5 @@
 import pytest
-from .pass_gen import generate_password
+from app.pass_gen import generate_password
 
 
 @pytest.mark.parametrize(

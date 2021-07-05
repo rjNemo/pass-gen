@@ -3,8 +3,8 @@ lint:
 	pipenv run black -l 99 .
 	pipenv run flake8 .
 	pipenv run mypy . 
-	pipenv run vulture .
-	pipenv run bandit .
+	# pipenv run vulture .
+	pipenv run bandit -r --exclude=test .
 
 .PHONY: test
 test: 

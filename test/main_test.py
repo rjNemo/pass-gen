@@ -1,6 +1,8 @@
+from typing import Any
+
 from typer.testing import CliRunner, Result
 
-from .main import app
+from app.main import app
 
 runner = CliRunner()
 
@@ -38,7 +40,7 @@ def test_cli_can_save_to_file() -> None:
         assert "2yW4AcqG" in content
 
 
-def _run_cli(*args) -> Result:
+def _run_cli(*args: Any) -> Result:
     result = runner.invoke(app, ["--no-random", *args])
     assert result.exit_code == 0
     return result
