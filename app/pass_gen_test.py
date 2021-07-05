@@ -27,9 +27,20 @@ def test_control_password_length(seed: int, length: int, expected: str) -> None:
 @pytest.mark.parametrize(
     ("seed", "symbols", "expected"),
     [
-        (0, True, "X1fH$!ZM"),
-        (1, True, """r+iGp"58"""),
+        (0, True, """X"fH.+ZM"""),
+        (1, True, """r?iGp,&)"""),
     ],
 )
 def test_password_can_contain_symbols(seed: int, symbols: bool, expected: str) -> None:
     assert generate_password(seed, symbols=symbols) == expected
+
+
+@pytest.mark.parametrize(
+    ("seed", "numbers", "expected"),
+    [
+        (0, False, "yWAcqGFz"),
+        (1, False, "iKWeqhFC"),
+    ],
+)
+def test_password_can_contain_numbers(seed: int, numbers: bool, expected: str) -> None:
+    assert generate_password(seed, numbers=numbers) == expected

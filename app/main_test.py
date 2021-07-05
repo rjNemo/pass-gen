@@ -20,7 +20,14 @@ def test_cli_can_set_symbols() -> None:
     args = ["--symbols"]
     result = _run_cli(*args)
     print(result.stdout)
-    assert "X1fH$!ZM" in result.stdout
+    assert """X"fH.+ZM""" in result.stdout
+
+
+def test_cli_can_set_numbers() -> None:
+    args = ["--no-numbers"]
+    result = _run_cli(*args)
+    print(result.stdout)
+    assert "yWAcqGFz" in result.stdout
 
 
 def _run_cli(*args) -> Result:
