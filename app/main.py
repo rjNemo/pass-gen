@@ -1,4 +1,5 @@
 import random as r
+import subprocess
 
 import typer
 
@@ -19,7 +20,12 @@ def main(
     ),
 ) -> None:
     seed = r.randint(0, 100) if random else 0
-    typer.echo(generate_password(seed, length, symbols, numbers))
+    password = generate_password(seed, length, symbols, numbers)
+
+    subprocess.run("pbcopy", universal_newlines=True, input=password)
+
+    typer.echo(f"🔐 {password}")
+    typer.echo("The password has been copied to your clipboard 😉")
 
 
 if __name__ == "__main__":
