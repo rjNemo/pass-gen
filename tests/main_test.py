@@ -1,8 +1,8 @@
 from typing import Any
 
+from app.main import app
 from typer.testing import CliRunner, Result
 
-from app.main import app
 
 runner = CliRunner()
 

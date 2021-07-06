@@ -35,7 +35,3 @@ def main(
 
     subprocess.run("pbcopy", universal_newlines=True, input=password)
     typer.echo("The password has been copied to your clipboard 😉\nPaste it using cmd + v")
-
-
-if __name__ == "__main__":
-    app()  # pragma nocover

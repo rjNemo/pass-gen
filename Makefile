@@ -12,8 +12,8 @@ test:
 
 .PHONY: cli
 cli: 
-	pipenv run python -m app.main
+	pipenv run python -m app
 
 .PHONY: help
 help: 
-	pipenv run python -m app.main --help
+	pipenv run python -m app --help
