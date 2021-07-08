@@ -26,7 +26,7 @@ def test_cli_can_set_symbols() -> None:
 
 
 def test_cli_can_set_numbers() -> None:
-    args = ["--no-numbers"]
+    args = ["-n"]
     result = _run_cli(*args)
     print(result.stdout)
     assert "yWAcqGFz" in result.stdout

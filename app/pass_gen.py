@@ -2,15 +2,22 @@ import random
 import string
 from typing import Protocol
 
+from pydantic import BaseModel
 
-def generate_password(
-    seed: int, length: int = 8, symbols: bool = False, numbers: bool = True
-) -> str:
-    characters = _build_characters(symbols=symbols, numbers=numbers)
 
-    random_generator = _new_random_generator(seed)
+class PassGenOptions(BaseModel):
+    seed: int
+    length: int = 8
+    symbols: bool = False
+    numbers: bool = True
 
-    return "".join(random_generator.sample(characters, length))
+
+def generate_password(options: PassGenOptions) -> str:
+    characters = _build_characters(symbols=options.symbols, numbers=options.numbers)
+
+    random_generator = _new_random_generator(options.seed)
+
+    return "".join(random_generator.sample(characters, options.length))
 
 
 class RandomSampler(Protocol):

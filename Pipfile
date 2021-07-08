@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+pydantic = "==1.8.2"
 typer = "==0.3.2"
 
 [dev-packages]

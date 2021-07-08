@@ -1,5 +1,5 @@
 import pytest
-from app.pass_gen import generate_password
+from app.pass_gen import PassGenOptions, generate_password
 
 
 @pytest.mark.parametrize(
@@ -10,7 +10,8 @@ from app.pass_gen import generate_password
     ],
 )
 def test_can_generate_random_password(seed: int, expected: str) -> None:
-    assert generate_password(seed) == expected
+    options = PassGenOptions(seed=seed)
+    assert generate_password(options) == expected
 
 
 @pytest.mark.parametrize(
@@ -21,7 +22,8 @@ def test_can_generate_random_password(seed: int, expected: str) -> None:
     ],
 )
 def test_control_password_length(seed: int, length: int, expected: str) -> None:
-    assert generate_password(seed, length) == expected
+    options = PassGenOptions(seed=seed, length=length)
+    assert generate_password(options) == expected
 
 
 @pytest.mark.parametrize(
@@ -32,7 +34,8 @@ def test_control_password_length(seed: int, length: int, expected: str) -> None:
     ],
 )
 def test_password_can_contain_symbols(seed: int, symbols: bool, expected: str) -> None:
-    assert generate_password(seed, symbols=symbols) == expected
+    options = PassGenOptions(seed=seed, symbols=symbols)
+    assert generate_password(options) == expected
 
 
 @pytest.mark.parametrize(
@@ -43,4 +46,5 @@ def test_password_can_contain_symbols(seed: int, symbols: bool, expected: str) -
     ],
 )
 def test_password_can_contain_numbers(seed: int, numbers: bool, expected: str) -> None:
-    assert generate_password(seed, numbers=numbers) == expected
+    options = PassGenOptions(seed=seed, numbers=numbers)
+    assert generate_password(options) == expected

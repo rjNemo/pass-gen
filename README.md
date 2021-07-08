@@ -5,17 +5,18 @@ A simple password generator command line interface.
 ## Stories
 
 - [x] As a user I want to generate a random secure password to protect my personal accounts
-    - [x] Minimal length
-    - [x] Include symbols
-    - [x] Include numbers
+  - [x] Minimal length
+  - [x] Include symbols
+  - [x] Include numbers
 - [x] As a user I want the generated password to be copied to the clipboard
 - [x] As a user I want the generated password to be saved to a file
-
+- [ ] As a user I want to store generated passwords in a database for later usage
+  - [ ] Passwords must not be associated directly with the service they were generated for
+  - [ ] I can verify if the password is associated to a given service
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 
 ### Installing
 
@@ -49,7 +50,6 @@ make help
 make test
 ```
 
-
 ## Built With
 
 - [Typer](https://typer.tiangolo.com/) - Typer, build great CLIs. Easy to code. Based on Python type hints
@@ -71,4 +71,3 @@ See also the list of [contributors](https://github.com/rjNemo/pass-gen/contribut
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
