@@ -1,10 +1,10 @@
 import random as r
-import subprocess
 from typing import Optional
 
 import typer
 
-from .pass_gen import PassGenOptions, generate_password
+import app.usecases.pass_gen as pass_gen
+import app.usecases.utils as utils
 
 app = typer.Typer()
 
@@ -38,29 +38,20 @@ def main(
     random: bool = True,
 ) -> None:
     seed = r.randint(0, 100) if random else 0
-    options = PassGenOptions(
+    options = pass_gen.PassGenOptions(
         seed=seed,
         length=length,
         symbols=symbols,
         numbers=numbers,
     )
 
-    password = generate_password(options)
+    password = pass_gen.generate_password(options)
 
     typer.echo(typer.style(f"🔐 {password}", fg=typer.colors.GREEN, bold=True))
 
     if file is not None:
-        save_to_file(file, password)
+        utils.save_to_file(file, password)
         return typer.echo(f"The password has been saved to: {file} 🗄")
 
-    return copy_to_clipboard(password)
-
-
-def copy_to_clipboard(password: str) -> None:
-    subprocess.run("pbcopy", universal_newlines=True, input=password)
+    utils.copy_to_clipboard(password)
     return typer.echo("The password has been copied to your clipboard 😉\nPaste it using cmd + v")
-
-
-def save_to_file(file: str, password: str) -> None:
-    with open(file, "w") as f:
-        f.write(password)

@@ -14,9 +14,7 @@ class PassGenOptions(BaseModel):
 
 def generate_password(options: PassGenOptions) -> str:
     characters = _build_characters(symbols=options.symbols, numbers=options.numbers)
-
     random_generator = _new_random_generator(options.seed)
-
     return "".join(random_generator.sample(characters, options.length))
 
 
@@ -30,11 +28,10 @@ def _new_random_generator(seed: int) -> RandomSampler:
 
 
 def _build_characters(symbols: bool, numbers: bool) -> str:
-    characters = string.ascii_letters
-
-    if symbols:
-        characters += string.punctuation
-    if numbers:
-        characters += string.digits
-
-    return characters
+    return "".join(
+        [
+            string.ascii_letters,
+            string.punctuation if symbols else "",
+            string.digits if numbers else "",
+        ]
+    )
