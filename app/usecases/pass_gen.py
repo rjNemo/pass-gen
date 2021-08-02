@@ -4,6 +4,8 @@ from typing import Protocol
 
 from pydantic import BaseModel
 
+from app.repositories.sqlite import PasswordRepository
+
 
 class PassGenOptions(BaseModel):
     seed: int
@@ -12,10 +14,12 @@ class PassGenOptions(BaseModel):
     numbers: bool = True
 
 
-def generate_password(options: PassGenOptions) -> str:
+def generate_password(repo: PasswordRepository, options: PassGenOptions) -> str:
     characters = _build_characters(symbols=options.symbols, numbers=options.numbers)
     random_generator = _new_random_generator(options.seed)
-    return "".join(random_generator.sample(characters, options.length))
+    password = "".join(random_generator.sample(characters, options.length))
+    repo.save(password)
+    return password
 
 
 class RandomSampler(Protocol):

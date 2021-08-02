@@ -3,8 +3,10 @@ from typing import Optional
 
 import typer
 
+import app.data.sqlite as sqlite
 import app.usecases.pass_gen as pass_gen
 import app.usecases.utils as utils
+from app.repositories.sqlite import PasswordRepository
 
 app = typer.Typer()
 
@@ -44,8 +46,9 @@ def main(
         symbols=symbols,
         numbers=numbers,
     )
-
-    password = pass_gen.generate_password(options)
+    db = sqlite.DB()
+    sqlite_repo = PasswordRepository(db)
+    password = pass_gen.generate_password(sqlite_repo, options)
 
     typer.echo(typer.style(f"🔐 {password}", fg=typer.colors.GREEN, bold=True))
 
