@@ -10,7 +10,7 @@ A simple password generator command line interface.
   - [x] Include numbers
 - [x] As a user I want the generated password to be copied to the clipboard
 - [x] As a user I want the generated password to be saved to a file
-- [ ] As a user I want to store generated passwords in a database for later usage
+- [x] As a user I want to store generated passwords in a database for later usage
   - [ ] Passwords must not be associated directly with the service they were generated for
   - [ ] I can verify if the password is associated to a given service
 
