@@ -39,3 +39,7 @@ def _build_characters(symbols: bool, numbers: bool) -> str:
             string.digits if numbers else "",
         ]
     )
+
+
+def list_all_saved_passwords(repo: Repository) -> list[str]:
+    return repo.list_all()

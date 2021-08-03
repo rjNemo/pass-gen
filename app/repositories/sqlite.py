@@ -13,6 +13,9 @@ class PasswordRepository:
         except Exception as e:
             print(e)
 
+    def list_all(self) -> list[str]:
+        return [row[0] for row in self.db.execute("SELECT * FROM passwords").fetchall()]
+
 
 def get_instance() -> PasswordRepository:
     db = sqlite.DB()

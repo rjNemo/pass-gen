@@ -40,7 +40,19 @@ def test_cli_can_save_to_file() -> None:
         assert "2yW4AcqG" in content
 
 
+def test_cli_can_save_to_db() -> None:
+    _run_cli()
+    result = _run_cli_read()
+    assert "2yW4AcqG" in result.stdout
+
+
 def _run_cli(*args: Any) -> Result:
-    result = runner.invoke(app, ["--no-random", *args])
+    result = runner.invoke(app, ["save", "--no-random", *args])
+    assert result.exit_code == 0
+    return result
+
+
+def _run_cli_read(*args: Any) -> Result:
+    result = runner.invoke(app, ["read", *args])
     assert result.exit_code == 0
     return result

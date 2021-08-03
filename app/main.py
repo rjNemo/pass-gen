@@ -11,7 +11,7 @@ app = typer.Typer()
 
 
 @app.command()
-def main(
+def save(
     length: int = typer.Option(
         8,
         "--length",
@@ -57,3 +57,10 @@ def main(
 
     utils.copy_to_clipboard(password)
     return typer.echo("The password has been copied to your clipboard 😉\nPaste it using cmd + v")
+
+
+@app.command()
+def read() -> None:
+    sqlite_repo = sqlite.get_instance()
+    stored_passwords = sqlite_repo.list_all()
+    typer.echo(stored_passwords)

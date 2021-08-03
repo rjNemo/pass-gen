@@ -11,5 +11,5 @@ class DB:
     def commit(self) -> None:
         self.connection.commit()
 
-    def execute(self, query: str, *args: Any) -> None:
-        self.cursor.execute(query, *args)
+    def execute(self, query: str, *args: Any) -> sqlite3.Cursor:
+        return self.cursor.execute(query, *args)

@@ -1,7 +1,7 @@
 import pytest
 
 from app.repositories.fake import FakeRepository
-from app.usecases.pass_gen import PassGenOptions, generate_password
+from app.usecases.pass_gen import PassGenOptions, generate_password, list_all_saved_passwords
 
 fake_repo = FakeRepository.get_instance()
 
@@ -52,3 +52,11 @@ def test_password_can_contain_symbols(seed: int, symbols: bool, expected: str) -
 def test_password_can_contain_numbers(seed: int, numbers: bool, expected: str) -> None:
     options = PassGenOptions(seed=seed, numbers=numbers)
     assert generate_password(fake_repo, options) == expected
+
+
+@pytest.mark.parametrize(
+    "expected",
+    [["2yW4AcqG", "iK2ZWeqh"]],
+)
+def test_can_read_all_saved_passwords(expected: list[str]) -> None:
+    assert list_all_saved_passwords(fake_repo) == expected
