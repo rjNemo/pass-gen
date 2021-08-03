@@ -1,5 +1,6 @@
 import app.data.sqlite as sqlite
 from app.data.type import DBConnector
+from app.models.password import Password
 
 
 class PasswordRepository:
@@ -8,13 +9,20 @@ class PasswordRepository:
 
     def save(self, password: str) -> None:
         try:
-            self.db.execute("INSERT INTO passwords VALUES (:password)", {"password": password})
+            self.db.execute(
+                "INSERT INTO passwords VALUES (null, :service, :password)",
+                {"service": "service", "password": password},
+            )
+
             self.db.commit()
         except Exception as e:
             print(e)
 
-    def list_all(self) -> list[str]:
-        return [row[0] for row in self.db.execute("SELECT * FROM passwords").fetchall()]
+    def list_all(self) -> list[Password]:
+        return [
+            Password(id=row[0], service=row[1], password=row[2])
+            for row in self.db.execute("SELECT * FROM " "passwords").fetchall()
+        ]
 
 
 def get_instance() -> PasswordRepository:

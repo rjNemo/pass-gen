@@ -1,5 +1,7 @@
 import pytest
+from pydantic import SecretStr
 
+from app.models.password import Password
 from app.repositories.fake import FakeRepository
 from app.usecases.pass_gen import PassGenOptions, generate_password, list_all_saved_passwords
 
@@ -56,7 +58,12 @@ def test_password_can_contain_numbers(seed: int, numbers: bool, expected: str) -
 
 @pytest.mark.parametrize(
     "expected",
-    [["2yW4AcqG", "iK2ZWeqh"]],
+    [
+        [
+            Password(id=0, service="first", password=SecretStr("2yW4AcqG")),
+            Password(id=1, service="second", password=SecretStr("iK2ZWeqh")),
+        ],
+    ],
 )
 def test_can_read_all_saved_passwords(expected: list[str]) -> None:
     assert list_all_saved_passwords(fake_repo) == expected
