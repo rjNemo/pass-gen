@@ -7,8 +7,8 @@ class DB:
         self.connection = sqlite3.connect(db_str)
         self.cursor = self.connection.cursor()
         self.execute(
-            "CREATE TABLE IF NOT EXISTS passwords (id integer PRIMARY KEY , service text UNIQUE NOT NULL, "
-            "password text NOT NULL)"
+            "CREATE TABLE IF NOT EXISTS passwords (id integer PRIMARY KEY, "
+            "service text UNIQUE NOT NULL, password text NOT NULL)"
         )
 
     def commit(self) -> None:

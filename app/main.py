@@ -12,6 +12,7 @@ app = typer.Typer()
 
 @app.command()
 def save(
+    service: str = typer.Argument(..., help="Name of the service associated to the password"),
     length: int = typer.Option(
         8,
         "--length",
@@ -41,6 +42,7 @@ def save(
     sqlite_repo = sqlite.get_instance()
     seed = r.randint(0, 100) if random else 0
     options = pass_gen.PassGenOptions(
+        service=service,
         seed=seed,
         length=length,
         symbols=symbols,
@@ -63,4 +65,4 @@ def save(
 def read() -> None:
     sqlite_repo = sqlite.get_instance()
     stored_passwords = sqlite_repo.list_all()
-    typer.echo(*[f"{p.service}: {p.password.get_secret_value()}" for p in stored_passwords])
+    typer.echo([f"{p.service}: {p.password.get_secret_value()}" for p in stored_passwords])

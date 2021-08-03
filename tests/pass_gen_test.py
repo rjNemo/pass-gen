@@ -6,6 +6,7 @@ from app.repositories.fake import FakeRepository
 from app.usecases.pass_gen import PassGenOptions, generate_password, list_all_saved_passwords
 
 fake_repo = FakeRepository.get_instance()
+service = "service_name"
 
 
 @pytest.mark.parametrize(
@@ -16,7 +17,7 @@ fake_repo = FakeRepository.get_instance()
     ],
 )
 def test_can_generate_random_password(seed: int, expected: str) -> None:
-    options = PassGenOptions(seed=seed)
+    options = PassGenOptions(seed=seed, service=service)
     assert generate_password(fake_repo, options) == expected
 
 
@@ -28,7 +29,7 @@ def test_can_generate_random_password(seed: int, expected: str) -> None:
     ],
 )
 def test_control_password_length(seed: int, length: int, expected: str) -> None:
-    options = PassGenOptions(seed=seed, length=length)
+    options = PassGenOptions(seed=seed, length=length, service=service)
     assert generate_password(fake_repo, options) == expected
 
 
@@ -40,7 +41,7 @@ def test_control_password_length(seed: int, length: int, expected: str) -> None:
     ],
 )
 def test_password_can_contain_symbols(seed: int, symbols: bool, expected: str) -> None:
-    options = PassGenOptions(seed=seed, symbols=symbols)
+    options = PassGenOptions(seed=seed, symbols=symbols, service=service)
     assert generate_password(fake_repo, options) == expected
 
 
@@ -52,7 +53,7 @@ def test_password_can_contain_symbols(seed: int, symbols: bool, expected: str) -
     ],
 )
 def test_password_can_contain_numbers(seed: int, numbers: bool, expected: str) -> None:
-    options = PassGenOptions(seed=seed, numbers=numbers)
+    options = PassGenOptions(seed=seed, numbers=numbers, service=service)
     assert generate_password(fake_repo, options) == expected
 
 

@@ -7,11 +7,11 @@ class PasswordRepository:
     def __init__(self, db: DBConnector) -> None:
         self.db = db
 
-    def save(self, password: str) -> None:
+    def save(self, service: str, password: str) -> None:
         try:
             self.db.execute(
                 "INSERT INTO passwords VALUES (null, :service, :password)",
-                {"service": "service", "password": password},
+                {"service": service, "password": password},
             )
 
             self.db.commit()

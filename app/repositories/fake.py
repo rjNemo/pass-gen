@@ -6,7 +6,7 @@ from app.models.password import Password
 
 
 class FakeRepository:
-    def save(self, password: str) -> None:
+    def save(self, service: str, password: str) -> None:
         ...
 
     def list_all(self) -> list[Password]:

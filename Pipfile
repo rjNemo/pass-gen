@@ -4,17 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pydantic = "==1.8.2"
-typer = "==0.3.2"
+pydantic = "~=1.8.2"
+typer = "~=0.3.2"
 
 [dev-packages]
-bandit = "==1.7.0"
-black = "==21.6b0"
-flake8 = "==3.9.2"
-mypy = "==0.910"
-pytest = "==6.2.4"
-pytest-cov = "==2.12.1"
-vulture = "==2.3"
+bandit = "~=1.7.0"
+black = "~=21.6b0"
+faker = "~=8.11.0"
+flake8 = "~=3.9.2"
+mypy = "~=0.910"
+pytest = "~=6.2.4"
+pytest-cov = "~=2.12.1"
+vulture = "~=2.3"
 
 [scripts]
 passgen = "python -m app"

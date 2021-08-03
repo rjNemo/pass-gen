@@ -1,10 +1,13 @@
 from typing import Any
 
+from faker import Factory
+
 from app.main import app
 from typer.testing import CliRunner, Result
 
 
 runner = CliRunner()
+faker = Factory.create()
 
 
 def test_cli_print_password() -> None:
@@ -47,7 +50,7 @@ def test_cli_can_save_to_db() -> None:
 
 
 def _run_cli(*args: Any) -> Result:
-    result = runner.invoke(app, ["save", "--no-random", *args])
+    result = runner.invoke(app, ["save", faker.pystr(), "--no-random", *args])
     assert result.exit_code == 0
     return result
 

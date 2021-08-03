@@ -4,10 +4,12 @@ from typing import Protocol
 
 from pydantic import BaseModel
 
+from app.models.password import Password
 from app.repositories.type import Repository
 
 
 class PassGenOptions(BaseModel):
+    service: str
     seed: int
     length: int = 8
     symbols: bool = False
@@ -18,7 +20,7 @@ def generate_password(repo: Repository, options: PassGenOptions) -> str:
     characters = _build_characters(symbols=options.symbols, numbers=options.numbers)
     random_generator = _new_random_generator(options.seed)
     password = "".join(random_generator.sample(characters, options.length))
-    repo.save(password)
+    repo.save(options.service, password)
     return password
 
 
@@ -41,5 +43,5 @@ def _build_characters(symbols: bool, numbers: bool) -> str:
     )
 
 
-def list_all_saved_passwords(repo: Repository) -> list[str]:
+def list_all_saved_passwords(repo: Repository) -> list[Password]:
     return repo.list_all()
