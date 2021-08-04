@@ -1,13 +1,15 @@
 from __future__ import annotations
 
+from pydantic import SecretStr
+
 from app.models.password import Password
 
 
 class FakeRepository:
-    _values = {}
+    _values: dict[str, SecretStr] = {}
 
     def save(self, service: str, password: str) -> None:
-        self._values[service] = password
+        self._values[service] = SecretStr(password)
 
     def list_all(self) -> list[Password]:
         return [
@@ -17,6 +19,6 @@ class FakeRepository:
     def exists(self, service: str) -> bool:
         return service in self._values.keys()
 
-    @classmethod
-    def get_instance(cls) -> FakeRepository:
+    @staticmethod
+    def get_instance() -> FakeRepository:
         return FakeRepository()

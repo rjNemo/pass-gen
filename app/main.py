@@ -40,7 +40,7 @@ def save(
     random: bool = True,
 ) -> None:
     sqlite_repo = sqlite.get_instance()
-    seed = r.randint(0, 100) if random else 0
+    seed = r.randint(0, 100) if random else 0  # nosec
     options = pass_gen.PassGenOptions(
         service=service,
         seed=seed,
