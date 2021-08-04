@@ -9,3 +9,6 @@ class Repository(Protocol):
 
     def list_all(self) -> list[Password]:
         ...
+
+    def exists(self, service: str) -> bool:
+        ...

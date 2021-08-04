@@ -17,6 +17,9 @@ class PassGenOptions(BaseModel):
 
 
 def generate_password(repo: Repository, options: PassGenOptions) -> str:
+    if repo.exists(options.service):
+        raise ValueError("password for this service has already been set")
+
     characters = _build_characters(symbols=options.symbols, numbers=options.numbers)
     random_generator = _new_random_generator(options.seed)
     password = "".join(random_generator.sample(characters, options.length))

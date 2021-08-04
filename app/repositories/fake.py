@@ -15,6 +15,9 @@ class FakeRepository:
             Password(id=1, service="second", password=SecretStr("iK2ZWeqh")),
         ]
 
+    def exists(self, service: str) -> bool:
+        return False
+
     @classmethod
     def get_instance(cls) -> FakeRepository:
         return FakeRepository()

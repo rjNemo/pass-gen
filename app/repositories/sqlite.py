@@ -21,8 +21,16 @@ class PasswordRepository:
     def list_all(self) -> list[Password]:
         return [
             Password(id=row[0], service=row[1], password=row[2])
-            for row in self.db.execute("SELECT * FROM " "passwords").fetchall()
+            for row in self.db.execute("SELECT * FROM passwords").fetchall()
         ]
+
+    def exists(self, service: str) -> bool:
+        row = self.db.execute(
+            "SELECT EXISTS(SELECT 1 FROM passwords WHERE service=:service)",
+            {"service": service},
+        ).fetchone()
+
+        return bool(row[0])
 
 
 def get_instance() -> PasswordRepository:

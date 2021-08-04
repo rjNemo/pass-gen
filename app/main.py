@@ -49,20 +49,26 @@ def save(
         numbers=numbers,
     )
 
-    password = pass_gen.generate_password(sqlite_repo, options)
+    try:
+        password = pass_gen.generate_password(sqlite_repo, options)
 
-    typer.echo(typer.style(f"🔐 {password}", fg=typer.colors.GREEN, bold=True))
+        typer.echo(typer.style(f"🔐 {password}", fg=typer.colors.GREEN, bold=True))
 
-    if file is not None:
-        utils.save_to_file(file, password)
-        return typer.echo(f"The password has been saved to: {file} 🗄")
+        if file is not None:
+            utils.save_to_file(file, password)
+            return typer.echo(f"The password has been saved to: {file} 🗄")
 
-    utils.copy_to_clipboard(password)
-    return typer.echo("The password has been copied to your clipboard 😉\nPaste it using cmd + v")
+        utils.copy_to_clipboard(password)
+        return typer.echo(
+            "The password has been copied to your clipboard 😉\nPaste it using cmd + v"
+        )
+    except ValueError as error:
+        typer.echo(f"error: {error}", err=True)
 
 
 @app.command()
 def read() -> None:
     sqlite_repo = sqlite.get_instance()
-    stored_passwords = sqlite_repo.list_all()
-    typer.echo([f"{p.service}: {p.password.get_secret_value()}" for p in stored_passwords])
+    stored_passwords = pass_gen.list_all_saved_passwords(sqlite_repo)
+    for p in stored_passwords:
+        typer.echo(f"{p.service}: {p.password.get_secret_value()}")
