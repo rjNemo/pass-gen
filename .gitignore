@@ -24,7 +24,7 @@ MANIFEST
 *.spec
 pip-log.txt
 pip-delete-this-directory.txt
-htmlcov/
+.htmlcov/
 .tox/
 .nox/
 .coverage

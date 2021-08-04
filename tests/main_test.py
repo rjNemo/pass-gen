@@ -1,10 +1,9 @@
 from typing import Any
 
 from faker import Factory
-
-from app.main import app
 from typer.testing import CliRunner, Result
 
+from app.main import app
 
 runner = CliRunner()
 faker = Factory.create()
@@ -47,6 +46,13 @@ def test_cli_can_save_to_db() -> None:
     _run_cli()
     result = _run_cli_read()
     assert "2yW4AcqG" in result.stdout
+
+
+def test_cli_cannot_save_password_for_service_twice() -> None:
+    service_name = faker.pystr()
+    runner.invoke(app, ["save", service_name, "--no-random"])
+    result = runner.invoke(app, ["save", service_name, "--no-random"])
+    assert "already been set" in result.stdout
 
 
 def _run_cli(*args: Any) -> Result:

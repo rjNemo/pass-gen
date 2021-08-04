@@ -1,0 +1,8 @@
+[run]
+omit =
+    # omit tests
+    */tests/*
+    # omit non testable files
+    app/__main__.py
+[html]
+directory = .htmlcov

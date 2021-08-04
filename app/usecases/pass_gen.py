@@ -2,13 +2,14 @@ import random
 import string
 from typing import Protocol
 
-from pydantic import BaseModel
+from pydantic.dataclasses import dataclass
 
 from app.models.password import Password
 from app.repositories.type import Repository
 
 
-class PassGenOptions(BaseModel):
+@dataclass(frozen=True)
+class PassGenOptions:
     service: str
     seed: int
     length: int = 8
