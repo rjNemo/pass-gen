@@ -8,6 +8,8 @@ A simple password generator command line interface.
   - [x] Minimal length
   - [x] Include symbols
   - [x] Include numbers
+  - [ ] Do not include ambiguous characters (O,l,etc.)
+  
 - [x] As a user I want the generated password to be copied to the clipboard
 - [x] As a user I want the generated password to be saved to a file
 - [x] As a user I want to store generated passwords in a database for later usage
