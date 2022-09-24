@@ -1,19 +1,24 @@
-.PHONY: lint
-lint: 
-	pipenv run black -l 99 .
-	pipenv run flake8 .
-	pipenv run mypy . 
-	# pipenv run vulture .
-	pipenv run bandit -r --exclude=test .
+lint:
+	@ echo "🧹 sort imports…"
+	@ poetry run isort .
+	@ echo "💅 formatting…"
+	@ poetry run black .
+	@ echo "📏 linting…"
+	@ poetry run flake8 .
+	@ echo "☑️ type checking…"
+	@ poetry run mypy .
+	@ echo "⛑ safety check…"
+	@ poetry run bandit -r --exclude=test .
+
+test:
+	@ echo "🧪 running tests…"
+	@ poetry run pytest -v --cov=. --cov-report=html
+
+cli:
+	@ echo "🚀 running app…"
+	@ poetry run python -m app
+
+help:
+	poetry run python -m app --help
 
 .PHONY: test
-test: 
-	pipenv run pytest -v --cov=. --cov-report=html
-
-.PHONY: cli
-cli: 
-	pipenv run python -m app
-
-.PHONY: help
-help: 
-	pipenv run python -m app --help

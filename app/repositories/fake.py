@@ -20,5 +20,5 @@ class FakeRepository:
         return service in self._values.keys()
 
     @staticmethod
-    def get_instance() -> FakeRepository:
+    def instance() -> FakeRepository:
         return FakeRepository()

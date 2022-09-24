@@ -1,37 +1,44 @@
-import random as r
+from random import randint
 from typing import Optional
 
-import typer
+from rich import print
+from rich.console import Console
+from typer import Argument, Option, Typer, echo
 
-import app.repositories.sqlite as sqlite
-import app.usecases.pass_gen as pass_gen
-import app.usecases.utils as utils
+from app.repositories import sqlite
+from app.usecases.pass_gen import (
+    PassGenOptions,
+    generate_password,
+    list_all_saved_passwords,
+)
+from app.usecases.utils import copy_to_clipboard, save_to_file
 
-app = typer.Typer()
+app = Typer()
+sqlite_repo = sqlite.instance()
 
 
 @app.command()
 def save(
-    service: str = typer.Argument(..., help="Name of the service associated to the password"),
-    length: int = typer.Option(
+    service: str = Argument(..., help="Name of the service associated to the password"),
+    length: int = Option(
         8,
         "--length",
         "-l",
         help="Length of the generated password.",
     ),
-    numbers: bool = typer.Option(
+    numbers: bool = Option(
         True,
         "--numbers",
         "-n",
         help="If the generated password should include numeric characters.",
     ),
-    symbols: bool = typer.Option(
+    symbols: bool = Option(
         False,
         "--symbols",
         "-s",
         help="If the generated password should include special characters.",
     ),
-    file: Optional[str] = typer.Option(
+    file: Optional[str] = Option(
         None,
         "--file",
         "-f",
@@ -39,9 +46,8 @@ def save(
     ),
     random: bool = True,
 ) -> None:
-    sqlite_repo = sqlite.get_instance()
-    seed = r.randint(0, 100) if random else 0  # nosec
-    options = pass_gen.PassGenOptions(
+    seed = randint(0, 100) if random else 0  # nosec
+    options = PassGenOptions(
         service=service,
         seed=seed,
         length=length,
@@ -50,25 +56,23 @@ def save(
     )
 
     try:
-        password = pass_gen.generate_password(sqlite_repo, options)
+        password = generate_password(sqlite_repo, options)
 
-        typer.echo(typer.style(f"🔐 {password}", fg=typer.colors.GREEN, bold=True))
+        print(f"🔐 [green]{password}[/green]")
 
         if file is not None:
-            utils.save_to_file(file, password)
-            return typer.echo(f"The password has been saved to: {file} 🗄")
+            save_to_file(file, password)
+            return print(f"The password has been saved to: {file} 🗄")
 
-        utils.copy_to_clipboard(password)
-        return typer.echo(
-            "The password has been copied to your clipboard 😉\nPaste it using cmd + v"
-        )
+        copy_to_clipboard(password)
+        return print("The password has been copied to your clipboard 😉\nPaste it using cmd + v")
     except ValueError as error:
-        typer.echo(f"error: {error}", err=True)
+        err_console = Console(stderr=True)
+        err_console.print(f"[red]error: {error}[/red]")
 
 
 @app.command()
 def read() -> None:
-    sqlite_repo = sqlite.get_instance()
-    stored_passwords = pass_gen.list_all_saved_passwords(sqlite_repo)
+    stored_passwords = list_all_saved_passwords(sqlite_repo)
     for p in stored_passwords:
-        typer.echo(f"{p.service}: {p.password.get_secret_value()}")
+        echo(f"{p.service}: {p.password.get_secret_value()}")

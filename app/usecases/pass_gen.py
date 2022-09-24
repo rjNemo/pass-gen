@@ -1,8 +1,6 @@
-import random
 import string
-from typing import Protocol
-
-from pydantic.dataclasses import dataclass
+from dataclasses import dataclass
+from random import Random
 
 from app.models.password import Password
 from app.repositories.type import Repository
@@ -22,22 +20,13 @@ def generate_password(repo: Repository, options: PassGenOptions) -> str:
         raise ValueError("password for this service has already been set")
 
     characters = _build_characters(symbols=options.symbols, numbers=options.numbers)
-    random_generator = _new_random_generator(options.seed)
+    random_generator = Random(options.seed)
     password = "".join(random_generator.sample(characters, options.length))
     repo.save(options.service, password)
     return password
 
 
-class RandomSampler(Protocol):
-    def sample(self, population: str, k: int) -> list[str]:
-        ...  # pragma nocover
-
-
-def _new_random_generator(seed: int) -> RandomSampler:
-    return random.Random(seed)
-
-
-def _build_characters(symbols: bool, numbers: bool) -> str:
+def _build_characters(*, symbols: bool, numbers: bool) -> str:
     return "".join(
         [
             string.ascii_letters,

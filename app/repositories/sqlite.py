@@ -33,6 +33,6 @@ class PasswordRepository:
         return bool(row[0])
 
 
-def get_instance() -> PasswordRepository:
+def instance() -> PasswordRepository:
     db = sqlite.DB()
     return PasswordRepository(db)
